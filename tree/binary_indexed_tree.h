@@ -21,8 +21,8 @@ class binary_indexed_tree_1d1mrq {
 
 public:
     binary_indexed_tree_1d1mrq( int maxlen,
-                                std::function< T( T, T ) > add = std::plus< T >(),
-                                std::function< T( T, T ) > sub = std::minus< T >() ) {
+                                std::function< T( const T&, const T& ) > add = std::plus< T >(),
+                                std::function< T( const T&, const T& ) > sub = std::minus< T >() ) {
         this->maxlen = maxlen;
         bit_a = new T[maxlen + 1];
         this->add = add;
@@ -60,8 +60,8 @@ private:
     // bit_a就是在a的基础上做树状数组
     int maxlen;
     T *bit_a;
-    std::function< T( T, T ) > add;
-    std::function< T( T, T ) > sub;
+    std::function< T( const T&, const T& ) > add;
+    std::function< T( const T&, const T& ) > sub;
 };
 
 
