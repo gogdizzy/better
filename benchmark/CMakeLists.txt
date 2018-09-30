@@ -1,0 +1,5 @@
+add_executable(benchmark_pq benchmark_pq.cpp)
+add_executable(benchmark_enum benchmark_enum.cpp)
+add_executable(benchmark_memory benchmark_memory.cpp)
+add_executable(benchmark_tuple benchmark_tuple.cpp)
+add_executable(benchmark_function benchmark_function.cpp)
