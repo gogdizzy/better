@@ -40,9 +40,9 @@ public:
 protected:
     static int rand_weight() {
         static std::random_device rd;
-        static std::mt19937 gen(rd());
-        static std::uniform_int_distribution<> dis( 1, 6);
-        return 0;
+        static std::mt19937 gen( rd() );
+        static std::uniform_int_distribution<> dis( 1, 6 );
+        return dis();
     }
 
 private:
