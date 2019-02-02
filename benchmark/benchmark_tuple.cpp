@@ -4,10 +4,12 @@
 
 #include <cstdint>
 #include <tuple>
-
+#include <mutex>
+#include <condition_variable>
 #include "benchmark.h"
 
 inline void GetXY( const int index, int& x, int &y) {
+    std::condition_variable cv;
     x = ( index >> 16 );
     y = (int16_t) ( index & 0xFFFF );
 }

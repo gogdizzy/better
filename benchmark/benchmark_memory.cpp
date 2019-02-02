@@ -3,6 +3,7 @@
 //
 
 #include <cstdio>
+#include <iostream>
 #include <cstdint>
 #include <cstdlib>
 #include <functional>
@@ -121,6 +122,65 @@ void testFibonacci( int N ) {
     for( int i = 0; i < N; ++i ) h1.pop();
 }
 
+template <typename T>
+int sign(T v)
+{
+    if (v > 0)
+        return 1;
+    else if (v < 0)
+        return -1;
+    else
+        return 0;
+}
+
+void TraverseLine(int32_t xs, int32_t ys, int32_t xe, int32_t ye, std::function<void (int32_t , int32_t , bool&)> handle8Connect, std::function<void (int32_t , int32_t , bool&)> handle4Connect)
+{
+    int32_t x = xs, y = ys;
+    int32_t dx = abs(xe - xs);
+    int32_t dy = abs(ye - ys);
+    int32_t sx = sign(xe - xs);
+    int32_t sy = sign(ye - ys);
+    bool flag;
+    if (dy > dx)
+    {
+        std::swap(dx, dy);
+        flag = 1;
+    }
+    else
+        flag = 0;
+
+    int32_t nerror = 2 * dy - dx;
+
+    bool stopTraverse = false;
+    for (int32_t i = 0; i <= dx; i++)
+    {
+        handle8Connect(x, y, stopTraverse);
+        if(stopTraverse)
+            break;
+
+        if (nerror >= 0)
+        {
+            if (flag)
+                x = x + sx;
+            else
+                y = y + sy;
+            nerror = nerror - 2 * dx;
+
+            if (handle4Connect != nullptr)
+            {
+                handle4Connect(x, y, stopTraverse);
+                if(stopTraverse)
+                    break;
+            }
+        }
+        if (flag)
+            y = y + sy;
+        else
+            x = x + sx;
+        nerror = nerror + 2 * dy;
+    }
+}
+
 int main() {
     srand( time( nullptr ) );
     std::vector<int> arr{ 1, 10, 100, 1000, 10000, 100000, 1000000 };
@@ -139,6 +199,15 @@ int main() {
 
 //    printf( "handle size %zd\n", sizeof(typename boost::heap::fibonacci_heap< UNIT, MyAllocator< UNIT > >::handle_type) );
 
-    return 0;
+//    auto func8 = [](int32_t x, int32_t y, bool&) {
+//        printf( "(%d,%d) 8\n", x, y );
+//    };
+//
+//    auto func4 = [](int32_t x, int32_t y, bool&) {
+//        printf( "(%d,%d) 4\n", x, y );
+//    };
+//
+//    TraverseLine( 1, 1, 5, 8, func8, func4 );
+
 }
 
